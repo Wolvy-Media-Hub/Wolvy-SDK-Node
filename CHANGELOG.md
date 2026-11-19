@@ -2,7 +2,7 @@
 
 All notable changes to `@wolvy/node` are listed here. The package follows [Semantic Versioning](https://semver.org/): no breaking change without a new major version.
 
-## [1.0.0] - Unreleased
+## [1.0.0] - 2026-11-19
 
 First release.
 
