@@ -1,0 +1,67 @@
+{
+  "name": "@wolvy/node",
+  "version": "1.0.0",
+  "description": "Official Node.js SDK for the Wolvy Developer API: a typed client, viewer-token signing, webhook verification and embed URLs.",
+  "license": "Apache-2.0",
+  "author": "MAIM For Digital Solutions",
+  "homepage": "https://docs.wolvy.net/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wolvy-Media-Hub/Wolvy-SDK-Node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wolvy-Media-Hub/Wolvy-SDK-Node/issues"
+  },
+  "keywords": [
+    "wolvy",
+    "drm",
+    "video",
+    "video-hosting",
+    "viewer-token",
+    "webhooks",
+    "sdk"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "sideEffects": false,
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node scripts/build.mjs && tsc -p test/types/tsconfig.json && node scripts/run-tests.mjs unit",
+    "test:types": "tsc -p test/types/tsconfig.json",
+    "test:unit": "node scripts/run-tests.mjs unit",
+    "test:integration": "node scripts/run-tests.mjs integration",
+    "prepublishOnly": "npm test"
+  },
+  "devDependencies": {
+    "@types/node": "18.19.130",
+    "typescript": "7.0.2"
+  }
+}

@@ -1,0 +1,394 @@
+{
+  "source": "Wolvy-Docs-UI/src/data/api.js and src/data/webhooks.js",
+  "endpoints": [
+    {
+      "id": "get-health",
+      "method": "GET",
+      "path": "/health",
+      "scope": null,
+      "status": 200
+    },
+    {
+      "id": "get-account",
+      "method": "GET",
+      "path": "/v1/account",
+      "scope": "account:read",
+      "status": 200
+    },
+    {
+      "id": "get-player-settings",
+      "method": "GET",
+      "path": "/v1/settings/player",
+      "scope": "account:read",
+      "status": 200
+    },
+    {
+      "id": "list-videos",
+      "method": "GET",
+      "path": "/v1/videos",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "create-video",
+      "method": "POST",
+      "path": "/v1/videos",
+      "scope": "videos:write",
+      "status": 202
+    },
+    {
+      "id": "get-video",
+      "method": "GET",
+      "path": "/v1/videos/{id}",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "get-video-status",
+      "method": "GET",
+      "path": "/v1/videos/{id}/status",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "update-video",
+      "method": "PATCH",
+      "path": "/v1/videos/{id}",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "delete-video",
+      "method": "DELETE",
+      "path": "/v1/videos/{id}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "bulk-videos",
+      "method": "POST",
+      "path": "/v1/videos/bulk",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "list-folders",
+      "method": "GET",
+      "path": "/v1/folders",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "create-folder",
+      "method": "POST",
+      "path": "/v1/folders",
+      "scope": "videos:write",
+      "status": 201
+    },
+    {
+      "id": "get-folder",
+      "method": "GET",
+      "path": "/v1/folders/{id}",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "update-folder",
+      "method": "PATCH",
+      "path": "/v1/folders/{id}",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "delete-folder",
+      "method": "DELETE",
+      "path": "/v1/folders/{id}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "list-tags",
+      "method": "GET",
+      "path": "/v1/tags",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "replace-video-tags",
+      "method": "PUT",
+      "path": "/v1/videos/{id}/tags",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "add-video-tags",
+      "method": "POST",
+      "path": "/v1/videos/{id}/tags",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "remove-video-tag",
+      "method": "DELETE",
+      "path": "/v1/videos/{id}/tags/{tag}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "list-captions",
+      "method": "GET",
+      "path": "/v1/videos/{id}/captions",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "add-caption",
+      "method": "POST",
+      "path": "/v1/videos/{id}/captions",
+      "scope": "videos:write",
+      "status": 201
+    },
+    {
+      "id": "delete-caption",
+      "method": "DELETE",
+      "path": "/v1/videos/{id}/captions/{language}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "list-chapters",
+      "method": "GET",
+      "path": "/v1/videos/{id}/chapters",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "add-chapter",
+      "method": "POST",
+      "path": "/v1/videos/{id}/chapters",
+      "scope": "videos:write",
+      "status": 201
+    },
+    {
+      "id": "update-chapter",
+      "method": "PATCH",
+      "path": "/v1/videos/{id}/chapters/{index}",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "delete-chapter",
+      "method": "DELETE",
+      "path": "/v1/videos/{id}/chapters/{index}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "list-moments",
+      "method": "GET",
+      "path": "/v1/videos/{id}/moments",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "add-moment",
+      "method": "POST",
+      "path": "/v1/videos/{id}/moments",
+      "scope": "videos:write",
+      "status": 201
+    },
+    {
+      "id": "update-moment",
+      "method": "PATCH",
+      "path": "/v1/videos/{id}/moments/{index}",
+      "scope": "videos:write",
+      "status": 200
+    },
+    {
+      "id": "delete-moment",
+      "method": "DELETE",
+      "path": "/v1/videos/{id}/moments/{index}",
+      "scope": "videos:write",
+      "status": 204
+    },
+    {
+      "id": "create-playback-token",
+      "method": "POST",
+      "path": "/v1/videos/{id}/playback-tokens",
+      "scope": "playback:sign",
+      "status": 201
+    },
+    {
+      "id": "get-embed",
+      "method": "GET",
+      "path": "/v1/videos/{id}/embed",
+      "scope": "videos:read",
+      "status": 200
+    },
+    {
+      "id": "analytics-overview",
+      "method": "GET",
+      "path": "/v1/analytics/overview",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "analytics-daily",
+      "method": "GET",
+      "path": "/v1/analytics/daily",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "analytics-countries",
+      "method": "GET",
+      "path": "/v1/analytics/countries",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "analytics-devices",
+      "method": "GET",
+      "path": "/v1/analytics/devices",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "video-analytics",
+      "method": "GET",
+      "path": "/v1/videos/{id}/analytics",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "get-usage",
+      "method": "GET",
+      "path": "/v1/usage",
+      "scope": "usage:read",
+      "status": 200
+    },
+    {
+      "id": "usage-history",
+      "method": "GET",
+      "path": "/v1/usage/history",
+      "scope": "usage:read",
+      "status": 200
+    },
+    {
+      "id": "get-plan",
+      "method": "GET",
+      "path": "/v1/plan",
+      "scope": "usage:read",
+      "status": 200
+    },
+    {
+      "id": "list-sessions",
+      "method": "GET",
+      "path": "/v1/sessions",
+      "scope": "sessions:read",
+      "status": 200
+    },
+    {
+      "id": "get-session",
+      "method": "GET",
+      "path": "/v1/sessions/{session_id}",
+      "scope": "sessions:read",
+      "status": 200
+    },
+    {
+      "id": "video-sessions",
+      "method": "GET",
+      "path": "/v1/videos/{id}/sessions",
+      "scope": "sessions:read",
+      "status": 200
+    },
+    {
+      "id": "list-viewers",
+      "method": "GET",
+      "path": "/v1/viewers",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "get-viewer",
+      "method": "GET",
+      "path": "/v1/viewers/{viewer_id}",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "sharing-report",
+      "method": "GET",
+      "path": "/v1/analytics/sharing",
+      "scope": "analytics:read",
+      "status": 200
+    },
+    {
+      "id": "list-security-events",
+      "method": "GET",
+      "path": "/v1/security-events",
+      "scope": "security:read",
+      "status": 200
+    },
+    {
+      "id": "list-webhook-endpoints",
+      "method": "GET",
+      "path": "/v1/webhook-endpoints",
+      "scope": "webhooks:manage",
+      "status": 200
+    },
+    {
+      "id": "create-webhook-endpoint",
+      "method": "POST",
+      "path": "/v1/webhook-endpoints",
+      "scope": "webhooks:manage",
+      "status": 201
+    },
+    {
+      "id": "get-webhook-endpoint",
+      "method": "GET",
+      "path": "/v1/webhook-endpoints/{id}",
+      "scope": "webhooks:manage",
+      "status": 200
+    },
+    {
+      "id": "update-webhook-endpoint",
+      "method": "PATCH",
+      "path": "/v1/webhook-endpoints/{id}",
+      "scope": "webhooks:manage",
+      "status": 200
+    },
+    {
+      "id": "delete-webhook-endpoint",
+      "method": "DELETE",
+      "path": "/v1/webhook-endpoints/{id}",
+      "scope": "webhooks:manage",
+      "status": 204
+    },
+    {
+      "id": "test-webhook-endpoint",
+      "method": "POST",
+      "path": "/v1/webhook-endpoints/{id}/test",
+      "scope": "webhooks:manage",
+      "status": 202
+    },
+    {
+      "id": "list-webhook-deliveries",
+      "method": "GET",
+      "path": "/v1/webhook-deliveries",
+      "scope": "webhooks:manage",
+      "status": 200
+    }
+  ],
+  "webhook_events": [
+    "video.created",
+    "video.ready",
+    "video.failed",
+    "video.deleted",
+    "caption.ready",
+    "security.event",
+    "payment.paid",
+    "usage.threshold_reached",
+    "webhook.test"
+  ]
+}

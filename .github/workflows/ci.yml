@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['18', '20', '22', 'current']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci
+      - name: Build (ESM, CommonJS, declarations)
+        run: npm run build
+      - name: Type checks of the published declarations
+        run: npm run test:types
+      - name: Unit tests
+        run: npm run test:unit
+      # The integration suite needs a running copy of the Developer API and is skipped here
+      # (it runs only when WOLVY_IT_BASE_URL is set); this step checks that it loads.
+      - name: Integration suite (skipped without a local API)
+        run: npm run test:integration
+      - name: Package contents
+        run: npm pack --dry-run

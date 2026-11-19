@@ -1,0 +1,130 @@
+[
+    {
+        "secret": "d80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781",
+        "viewer_id": "user-8813",
+        "now": 1789996400,
+        "ttl": 3600,
+        "vt": "eyJ2aWQiOiJ1c2VyLTg4MTMiLCJleHAiOjE3OTAwMDAwMDB9.XBNWyMiuLw0y7WlQkzO5s2N-eI8Ltxhs4N0uvDHM4ZM",
+        "exp": 1790000000
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "a/b",
+        "now": 1795000000,
+        "ttl": 60,
+        "vt": "eyJ2aWQiOiJhXC9iIiwiZXhwIjoxNzk1MDAwMDYwfQ.y0Kmcw6M6LbKZ_QFYspXQPz_WtQZojItPd8N7MEM3MI",
+        "exp": 1795000060
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "élève",
+        "now": 1795000001,
+        "ttl": 3600,
+        "vt": "eyJ2aWQiOiJcdTAwZTlsXHUwMGU4dmUiLCJleHAiOjE3OTUwMDM2MDF9.NoMDe7v9PYSdBtWtT23LFlPx74pnZskQ4ZXpb3_i2Fg",
+        "exp": 1795003601
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "😀 emoji",
+        "now": 1795000002,
+        "ttl": 21600,
+        "vt": "eyJ2aWQiOiJcdWQ4M2RcdWRlMDAgZW1vamkiLCJleHAiOjE3OTUwMjE2MDJ9.GKYcV8PkyBLi1HJ00rfRZQokYV5NUiZ6u28MpJSiWuc",
+        "exp": 1795021602
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "Ünïcödé/日本",
+        "now": 1795000003,
+        "ttl": 86400,
+        "vt": "eyJ2aWQiOiJcdTAwZGNuXHUwMGVmY1x1MDBmNmRcdTAwZTlcL1x1NjVlNVx1NjcyYyIsImV4cCI6MTc5NTA4NjQwM30.V0nQfpcnzS4EWRJ7OlVqLKx3aZYubadOOZTFfUiPWHw",
+        "exp": 1795086403
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "  padded \t\n",
+        "now": 1795000004,
+        "ttl": 60,
+        "vt": "eyJ2aWQiOiJwYWRkZWQiLCJleHAiOjE3OTUwMDAwNjR9.K8e012CDc2H3bPHSkhJH_6tIhe-MAoWPgj7RYW8jmmk",
+        "exp": 1795000064
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "he said \"hi\" \\ ok",
+        "now": 1795000005,
+        "ttl": 3600,
+        "vt": "eyJ2aWQiOiJoZSBzYWlkIFwiaGlcIiBcXCBvayIsImV4cCI6MTc5NTAwMzYwNX0.jBcKjmrG4V0Si1vblg4bJLXCi83kdtZXiD7rs0lkInw",
+        "exp": 1795003605
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "tab\there",
+        "now": 1795000006,
+        "ttl": 21600,
+        "vt": "eyJ2aWQiOiJ0YWJcdGhlcmUiLCJleHAiOjE3OTUwMjE2MDZ9.ymhrCPpCtj9lr7sWFeEYgDvDwS8row4-MNlEdnsRsWQ",
+        "exp": 1795021606
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "<script>&amp;",
+        "now": 1795000007,
+        "ttl": 86400,
+        "vt": "eyJ2aWQiOiI8c2NyaXB0PiZhbXA7IiwiZXhwIjoxNzk1MDg2NDA3fQ.uDOwNjoE0QBIOB62pNOr7PsdehrLHhKwpPxQ_adu9Fs",
+        "exp": 1795086407
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "delchar",
+        "now": 1795000008,
+        "ttl": 60,
+        "vt": "eyJ2aWQiOiJkZWx_Y2hhciIsImV4cCI6MTc5NTAwMDA2OH0.vFArRNtigw5kusZOVE4vCU5QUFlcguWckG4yRk4yiHo",
+        "exp": 1795000068
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "nul\u0001ctl\u001f",
+        "now": 1795000009,
+        "ttl": 3600,
+        "vt": "eyJ2aWQiOiJudWxcdTAwMDFjdGxcdTAwMWYiLCJleHAiOjE3OTUwMDM2MDl9.xSQWyjezFFDMUA7qVZmRxu8cnOdpVmpJSVyQ5leyT10",
+        "exp": 1795003609
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": " nbsp ",
+        "now": 1795000010,
+        "ttl": 21600,
+        "vt": "eyJ2aWQiOiJcdTAwYTBuYnNwXHUwMGEwIiwiZXhwIjoxNzk1MDIxNjEwfQ.U-uFqB1sJjY7issJ4W5ZEuQmKsMccOP7JFJsHl5FXQM",
+        "exp": 1795021610
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "\u2028line\u2029",
+        "now": 1795000011,
+        "ttl": 86400,
+        "vt": "eyJ2aWQiOiJcdTIwMjhsaW5lXHUyMDI5IiwiZXhwIjoxNzk1MDg2NDExfQ.2rfTVrSYYfnLVMUqUAP76ZB91YrvUdn3v5fOp1-AA3g",
+        "exp": 1795086411
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "now": 1795000012,
+        "ttl": 60,
+        "vt": "eyJ2aWQiOiJ4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4IiwiZXhwIjoxNzk1MDAwMDcyfQ.Tv9NqtE-hkVZtSKrFA_tK-MfhK825BIyDwJGKOaC2zo",
+        "exp": 1795000072
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "éééééééééééééééééééééééééééééééé",
+        "now": 1795000013,
+        "ttl": 3600,
+        "vt": "eyJ2aWQiOiJcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTlcdTAwZTkiLCJleHAiOjE3OTUwMDM2MTN9.gU8BvbUM7hASQPjYDkCc4KPdYacsleUqGjIQpuhecAM",
+        "exp": 1795003613
+    },
+    {
+        "secret": "b2c5d0a7e44f1c9e0d6a3f8b7e1c2d4a5f6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d",
+        "viewer_id": "sara@example.com",
+        "now": 1795000014,
+        "ttl": 21600,
+        "vt": "eyJ2aWQiOiJzYXJhQGV4YW1wbGUuY29tIiwiZXhwIjoxNzk1MDIxNjE0fQ.6_IGT2HeS3coO5Rl_1oa79OR8TAZvKyNsDZ3L4XN9-Y",
+        "exp": 1795021614
+    }
+]
