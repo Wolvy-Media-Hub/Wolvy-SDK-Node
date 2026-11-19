@@ -2,6 +2,12 @@
 
 All notable changes to `@wolvy/node` are listed here. The package follows [Semantic Versioning](https://semver.org/): no breaking change without a new major version.
 
+## [1.0.1] - 2026-11-19
+
+### Changed
+
+- Package author is now "Wolvy" (was the company's legal name). No code change; the `User-Agent` reports `wolvy-node/1.0.1`.
+
 ## [1.0.0] - 2026-11-19
 
 First release.

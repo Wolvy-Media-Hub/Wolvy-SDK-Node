@@ -242,7 +242,7 @@ export class HttpClient {
   }
 }
 
-/** `wolvy-node/1.0.0 node/22.11.0` */
+/** `wolvy-node/1.0.1 node/22.11.0` */
 export function userAgent(): string {
   const node = typeof process !== 'undefined' && process.versions?.node ? process.versions.node : 'unknown';
   return `wolvy-node/${VERSION} node/${node}`;

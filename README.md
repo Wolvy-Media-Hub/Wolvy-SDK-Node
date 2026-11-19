@@ -266,4 +266,4 @@ The integration suite and the settings it reads are described at the top of `tes
 
 ## Licence
 
-[Apache-2.0](LICENSE) © MAIM For Digital Solutions.
+[Apache-2.0](LICENSE) © Wolvy.
