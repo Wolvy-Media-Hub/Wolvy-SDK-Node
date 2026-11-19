@@ -68,7 +68,7 @@ describe('requests', () => {
     const h = calls[0].headers;
     assert.equal(h.authorization, `Bearer ${TEST_KEY}`);
     assert.equal(h['user-agent'], `wolvy-node/${VERSION} node/${process.versions.node}`);
-    assert.match(h['user-agent'], /^wolvy-node\/\d+\.\d+\.\d+ node\/\d+\.\d+\.\d+$/);
+    assert.match(h['user-agent'], /^wolvy-node\/\d+\.\d+\.\d+ node\/\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$/); // pre-releases too (CI "current")
     assert.equal(h.accept, 'application/json');
     assert.equal(h['content-type'], undefined, 'no body, no Content-Type');
     assert.equal(calls[0].method, 'GET');
