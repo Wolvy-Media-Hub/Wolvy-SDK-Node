@@ -2,6 +2,11 @@
 
 All notable changes to `@wolvy/node` are listed here. The package follows [Semantic Versioning](https://semver.org/): no breaking change without a new major version.
 
+## [1.1.0] - 2026-11-22
+
+### Added
+- Viewer tokens bound to one video: `signViewerToken(viewerId, ttl, secret, { video })` adds a `video` claim, and `wolvy.playback.createToken(videoId, { viewer_id, bind_video: true })` asks the API for one (`bound_to_video` in the answer). Wolvy then plays that token only for that video, so a token copied out of one page cannot open the account's other videos. Without it, nothing changes.
+
 ## [1.0.1] - 2026-11-19
 
 ### Changed

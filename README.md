@@ -126,8 +126,9 @@ const vt = signViewerToken(String(user.id), 3600, process.env.WOLVY_VIEWER_SECRE
 - `ttlSeconds`: a whole number from 60 to 86400 (24 hours), the range the API issues. A few hours suits a lesson; sign a fresh token per page view.
 - `secret`: the account's signing secret (dashboard: Settings → Watermark → Signing secret), as text — never hex-decode it.
 - `options.now`: the signing time (Unix seconds or a `Date`), for tests.
+- `options.video`: a Wolvy video id. The token then plays **only that video**, so a token copied out of one page cannot open your other videos (the API's `bind_video`).
 
-Invalid input throws a `TypeError` or `RangeError`. A token is not tied to a video: it plays every video of the account until it expires.
+Invalid input throws a `TypeError` or `RangeError`. Without `options.video`, a token plays every video of the account until it expires.
 
 ### `verifyWebhook(rawBody, signatureHeader, secret, tolerance = 300)`
 

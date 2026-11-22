@@ -10,6 +10,11 @@ export const VIEWER_ID_MAX_BYTES = 64;
 export interface SignViewerTokenOptions {
   /** The signing time, as Unix seconds or a Date. Default: now. `exp` is `now + ttlSeconds`. */
   now?: number | Date;
+  /**
+   * A Wolvy video id: the token then plays only that video (a `video` claim, as the API's
+   * `bind_video` makes). Default: any video of the account.
+   */
+  video?: string;
 }
 
 /**
@@ -62,8 +67,13 @@ export function signViewerToken(
     throw new TypeError('signViewerToken: secret must be a non-empty string (the account signing secret).');
   }
 
+  const video = options.video;
+  if (video !== undefined && (typeof video !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(video))) {
+    throw new RangeError('signViewerToken: options.video must be a Wolvy video id (1-64 letters, digits, "-" or "_").');
+  }
+
   const exp = unixSeconds(options.now) + ttlSeconds;
-  const json = `{"vid":${phpJsonString(vid)},"exp":${exp}}`;
+  const json = `{"vid":${phpJsonString(vid)},"exp":${exp}${video !== undefined ? `,"video":${phpJsonString(video)}` : ''}}`;
   const payload = Buffer.from(json, 'utf8').toString('base64url');
   const sig = createHmac('sha256', secret).update(payload).digest('base64url');
   return `${payload}.${sig}`;
