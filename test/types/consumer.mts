@@ -41,7 +41,7 @@ export async function examples(): Promise<void> {
 
   const token = await wolvy.playback.createToken('v', { viewer_id: 'user-1', ttl_seconds: 3600 });
   const vt: string = token.vt;
-  const url: string = embedUrl('v', (await wolvy.account.retrieve()).id, signViewerToken('user-1', 3600, 'secret'));
+  const url: string = embedUrl('v', (await wolvy.account.retrieve()).id, signViewerToken('user-1', 3600, 'secret', { video: 'v' }));
   void vt;
   void url;
 

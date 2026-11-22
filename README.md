@@ -3,7 +3,7 @@
 The official Node.js SDK for [Wolvy](https://wolvy.net), the DRM video hosting platform:
 
 - a typed client for every endpoint of the [Developer API v1](https://docs.wolvy.net/api/), with cursor pagination, automatic idempotency keys and retries;
-- `signViewerToken()` — sign viewer tokens locally, byte-identical to the API's own;
+- `signViewerToken()` — sign a viewer token for one video locally, byte-identical to the API's own;
 - `verifyWebhook()` — check a webhook delivery's signature and get the typed event;
 - `embedUrl()` — build the player's embed URL.
 
@@ -54,7 +54,7 @@ console.log(token.embed_url);
 
 // …or sign locally, with no request (same bytes):
 import { embedUrl, signViewerToken } from '@wolvy/node';
-const vt = signViewerToken('user-8813', 3600, process.env.WOLVY_VIEWER_SECRET);
+const vt = signViewerToken('user-8813', 3600, process.env.WOLVY_VIEWER_SECRET, { video: 'a1b2c3d4e5f60718293a' });
 const src = embedUrl('a1b2c3d4e5f60718293a', account.id, vt);
 ```
 
@@ -112,23 +112,23 @@ Short lists (captions, chapters, moments, tags, webhook endpoints, daily analyti
 
 ## The three helpers
 
-### `signViewerToken(viewerId, ttlSeconds, secret, options?)`
+### `signViewerToken(viewerId, ttlSeconds, secret, { video, now? })`
 
-Signs a [viewer token](https://docs.wolvy.net/viewer-tokens/) (`vt`) on your server, with no request — the token is **byte-identical** to the `vt` that `POST /v1/videos/{id}/playback-tokens` returns for the same viewer id, lifetime and second, and it matches the docs' published test vector.
+Signs a [viewer token](https://docs.wolvy.net/viewer-tokens/) (`vt`) for one video on your server, with no request — the token is **byte-identical** to the `vt` that `POST /v1/videos/{id}/playback-tokens` returns for the same viewer id, video, lifetime and second, and it matches the docs' published test vector.
 
 ```js
 import { signViewerToken } from '@wolvy/node';
 
-const vt = signViewerToken(String(user.id), 3600, process.env.WOLVY_VIEWER_SECRET);
+const vt = signViewerToken(String(user.id), 3600, process.env.WOLVY_VIEWER_SECRET, { video: videoId });
 ```
 
 - `viewerId`: your id for the person watching. It is drawn on the watermark and recorded with each session, so use one stable id per person (your user id). Spaces, tabs and line breaks at either end are removed, as the API does; then it must be 1–64 UTF-8 bytes.
 - `ttlSeconds`: a whole number from 60 to 86400 (24 hours), the range the API issues. A few hours suits a lesson; sign a fresh token per page view.
 - `secret`: the account's signing secret (dashboard: Settings → Watermark → Signing secret), as text — never hex-decode it.
+- `options.video` (required): the Wolvy video id the token plays. Wolvy plays a token **only for the video it names** and refuses one that names none, so a token copied out of one page cannot open your other videos. A page with several players signs one token for each.
 - `options.now`: the signing time (Unix seconds or a `Date`), for tests.
-- `options.video`: a Wolvy video id. The token then plays **only that video**, so a token copied out of one page cannot open your other videos (the API's `bind_video`).
 
-Invalid input throws a `TypeError` or `RangeError`. Without `options.video`, a token plays every video of the account until it expires.
+Invalid input throws a `TypeError` or `RangeError`; so does a call without `options.video`. `viewerTokenVideo(vt)` reads the video a token names, without the secret (for checks, never for access decisions).
 
 ### `verifyWebhook(rawBody, signatureHeader, secret, tolerance = 300)`
 
@@ -205,7 +205,7 @@ embedUrl('a1b2c3d4e5f60718293a', 42, vt);
 // https://embed.wolvy.stream/a1b2c3d4e5f60718293a/NDI=?vt=eyJ2aWQiOi…
 ```
 
-`accountId` is the number from `wolvy.account.retrieve()` (`id`), base64-encoded as text. The URL is the same one every video object's `embed_url` and the playback-token answer carry. Opened directly in a browser it shows a 403 page — no Referer reaches the domain check — so test it inside an iframe on an allowed page.
+`accountId` is the number from `wolvy.account.retrieve()` (`id`), base64-encoded as text. A token signed for another video, or for none, throws a `RangeError`, since Wolvy would refuse it. The URL is the same one every video object's `embed_url` and the playback-token answer carry. Opened directly in a browser it shows a 403 page — no Referer reaches the domain check — so test it inside an iframe on an allowed page.
 
 ## Errors
 

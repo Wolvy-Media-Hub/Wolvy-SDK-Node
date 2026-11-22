@@ -30,6 +30,7 @@ export {
 } from './errors.js';
 export {
   signViewerToken,
+  viewerTokenVideo,
   VIEWER_ID_MAX_BYTES,
   VIEWER_TOKEN_MAX_TTL,
   VIEWER_TOKEN_MIN_TTL,

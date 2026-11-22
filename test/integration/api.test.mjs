@@ -98,7 +98,8 @@ describe('Developer API (local copy)', { skip: SKIP }, () => {
       const token = await wolvy.playback.createToken(VIDEO, { viewer_id: viewerId, ttl_seconds: 3600 });
       assert.equal(token.object, 'playback_token');
       assert.equal(token.video_id, VIDEO);
-      const local = signViewerToken(viewerId, 3600, IT.viewerSecret, { now: exp(token.vt) - 3600 });
+      const local = signViewerToken(viewerId, 3600, IT.viewerSecret, { now: exp(token.vt) - 3600, video: VIDEO });
+      assert.equal(token.bound_to_video, true);
       assert.equal(local, token.vt, `viewer id ${JSON.stringify(viewerId)}`);
       assert.equal(token.expires_at, new Date(exp(token.vt) * 1000).toISOString().replace('.000Z', '+00:00'));
       assert.equal(token.embed_url, embedUrl(VIDEO, IT.accountId, local));
@@ -106,7 +107,7 @@ describe('Developer API (local copy)', { skip: SKIP }, () => {
     }
     // Default lifetime: 6 hours.
     const token = await wolvy.playback.createToken(VIDEO, { viewer_id: 'user-8813' });
-    assert.equal(signViewerToken('user-8813', 21600, IT.viewerSecret, { now: exp(token.vt) - 21600 }), token.vt);
+    assert.equal(signViewerToken('user-8813', 21600, IT.viewerSecret, { now: exp(token.vt) - 21600, video: VIDEO }), token.vt);
   });
 
   it('minting sends no Idempotency-Key by default; an explicit key is sent and replays', async () => {
@@ -131,16 +132,17 @@ describe('Developer API (local copy)', { skip: SKIP }, () => {
 
   it('the API and signViewerToken refuse the same lifetimes and ids', async () => {
     for (const [params, local] of [
-      [{ viewer_id: 'v', ttl_seconds: 59 }, () => signViewerToken('v', 59, IT.viewerSecret)],
-      [{ viewer_id: 'v', ttl_seconds: 86401 }, () => signViewerToken('v', 86401, IT.viewerSecret)],
-      [{ viewer_id: 'x'.repeat(65) }, () => signViewerToken('x'.repeat(65), 3600, IT.viewerSecret)],
-      [{ viewer_id: '   ' }, () => signViewerToken('   ', 3600, IT.viewerSecret)],
+      [{ viewer_id: 'v', ttl_seconds: 59 }, () => signViewerToken('v', 59, IT.viewerSecret, { video: VIDEO })],
+      [{ viewer_id: 'v', ttl_seconds: 86401 }, () => signViewerToken('v', 86401, IT.viewerSecret, { video: VIDEO })],
+      [{ viewer_id: 'x'.repeat(65) }, () => signViewerToken('x'.repeat(65), 3600, IT.viewerSecret, { video: VIDEO })],
+      [{ viewer_id: '   ' }, () => signViewerToken('   ', 3600, IT.viewerSecret, { video: VIDEO })],
     ]) {
       await assert.rejects(wolvy.playback.createToken(VIDEO, params), (e) => e.code === 'invalid_parameter' && ['viewer_id', 'ttl_seconds'].includes(e.param));
       assert.throws(local, RangeError);
     }
     assert.ok(await wolvy.playback.createToken(VIDEO, { viewer_id: 'v', ttl_seconds: 86400 }));
-    assert.ok(signViewerToken('v', 86400, IT.viewerSecret));
+    assert.ok(signViewerToken('v', 86400, IT.viewerSecret, { video: VIDEO }));
+    await assert.rejects(wolvy.playback.createToken(VIDEO, { viewer_id: 'v', bind_video: false }), (e) => e.code === 'invalid_parameter' && e.param === 'bind_video');
   });
 
   it('embed URL: the API, the video object and embedUrl() agree', async () => {

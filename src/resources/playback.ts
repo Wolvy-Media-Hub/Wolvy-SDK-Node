@@ -4,8 +4,9 @@ import { APIResource, seg } from './resource.js';
 
 export class Playback extends APIResource {
   /**
-   * POST /v1/videos/{id}/playback-tokens — mint a viewer token and the signed embed URL.
-   * signViewerToken() makes the same token locally, with no request. Scope playback:sign.
+   * POST /v1/videos/{id}/playback-tokens — mint a viewer token for this video and the signed
+   * embed URL. The token plays only this video. signViewerToken() makes the same token locally,
+   * with no request. Scope playback:sign.
    *
    * Sends no Idempotency-Key unless you pass one: minting changes nothing, a replay would hand
    * back an older token, and the API would keep every answer for 24 hours. It is still retried
