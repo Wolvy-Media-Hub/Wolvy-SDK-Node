@@ -4,7 +4,7 @@ import { EMBED_BASE_URL, embedUrl, signViewerToken } from '@wolvy/node';
 
 // The examples of docs.wolvy.net (api.js: EMBED_URL and the playback-token answer; embedding page).
 const VIDEO = 'a1b2c3d4e5f60718293a';
-const VT = 'eyJ2aWQiOiJ1c2VyLTg4MTMiLCJleHAiOjE3OTAwMDAwMDB9.XBNWyMiuLw0y7WlQkzO5s2N-eI8Ltxhs4N0uvDHM4ZM';
+const VT = 'eyJ2aWQiOiJ1c2VyLTg4MTMiLCJleHAiOjE3OTAwMDAwMDAsInZpZGVvIjoiYTFiMmMzZDRlNWY2MDcxODI5M2EifQ.KPYNjR-agijPtfv9s1VbBOSs_QJmi3NMlQ7tsUXCY9M'; // signed for VIDEO
 
 describe('embedUrl', () => {
   it('builds the docs example, unsigned and signed', () => {
@@ -22,8 +22,16 @@ describe('embedUrl', () => {
   it('works with a token from signViewerToken()', () => {
     const vt = signViewerToken('user-8813', 3600, 'd80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781', {
       now: 1789996400,
+      video: VIDEO,
     });
     assert.equal(embedUrl(VIDEO, 42, vt), `https://embed.wolvy.stream/${VIDEO}/NDI=?vt=${VT}`);
+  });
+
+  it('refuses a token signed for another video, or for none', () => {
+    const other = signViewerToken('user-8813', 600, 's', { video: 'vidB2' });
+    assert.throws(() => embedUrl(VIDEO, 42, other), RangeError);
+    const unbound = 'eyJ2aWQiOiJ1c2VyLTg4MTMiLCJleHAiOjE3OTAwMDAwMDB9.XBNWyMiuLw0y7WlQkzO5s2N-eI8Ltxhs4N0uvDHM4ZM';
+    assert.throws(() => embedUrl(VIDEO, 42, unbound), RangeError);
   });
 
   it('leaves the token off when it is missing or empty', () => {

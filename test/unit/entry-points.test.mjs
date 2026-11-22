@@ -23,6 +23,7 @@ function jsFiles(dir) {
 const PUBLIC = [
   'Wolvy',
   'signViewerToken',
+  'viewerTokenVideo',
   'verifyWebhook',
   'embedUrl',
   'WolvyError',
@@ -58,8 +59,8 @@ describe('entry points', () => {
     assert.equal(cjs.VERSION, pkg.version);
     assert.equal(typeof cjs.signViewerToken, 'function');
     assert.equal(
-      cjs.signViewerToken('user-8813', 3600, 'd80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781', { now: 1789996400 }),
-      esm.signViewerToken('user-8813', 3600, 'd80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781', { now: 1789996400 }),
+      cjs.signViewerToken('user-8813', 3600, 'd80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781', { now: 1789996400, video: 'vidA1' }),
+      esm.signViewerToken('user-8813', 3600, 'd80d15d09b7c0e56b4d787f6a212ed8bf8d53c761b6df521278f030cb12a7781', { now: 1789996400, video: 'vidA1' }),
     );
     const wolvy = new cjs.Wolvy({ apiKey: 'wv_live_x', fetch: async () => new Response('{}') });
     assert.equal(typeof wolvy.videos.list, 'function');

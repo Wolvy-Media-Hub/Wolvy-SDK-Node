@@ -2,6 +2,18 @@
 
 All notable changes to `@wolvy/node` are listed here. The package follows [Semantic Versioning](https://semver.org/): no breaking change without a new major version.
 
+## [2.0.0] - 2026-11-22
+
+Wolvy now refuses viewer tokens that name no video, for every account. Every token is signed for the one video it plays, so a token copied out of one page or app cannot open the account's other videos.
+
+### Changed (breaking)
+- `signViewerToken(viewerId, ttl, secret, { video })`: `options.video` is required. A 1.x call without it throws a `TypeError` instead of making a token Wolvy would refuse.
+- `embedUrl(videoId, accountId, vt)` throws a `RangeError` for a token that names another video, or none.
+- `PlaybackTokenCreateParams` no longer has `bind_video`: the API binds every token and refuses `bind_video: false`. `bound_to_video` is always true.
+
+### Added
+- `viewerTokenVideo(vt)`: the video a token names, read without the secret.
+
 ## [1.1.0] - 2026-11-22
 
 ### Added

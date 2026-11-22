@@ -1,3 +1,5 @@
+import { decodePayload, viewerTokenVideo } from './viewer-token.js';
+
 /** The player host. */
 export const EMBED_BASE_URL = 'https://embed.wolvy.stream';
 
@@ -9,7 +11,8 @@ export const EMBED_BASE_URL = 'https://embed.wolvy.stream';
  *
  * `accountId` is the number from `GET /v1/account` (`wolvy.account.retrieve()` → `id`);
  * it is base64-encoded as text here (42 → `NDI=`). Add a viewer token from
- * signViewerToken() for signed playback. Put the URL in an iframe with
+ * signViewerToken() for signed playback, signed for the same video: a token that names another
+ * video, or none, throws a RangeError here, as Wolvy would refuse it at playback. Put the URL in an iframe with
  * `allow="autoplay; fullscreen; encrypted-media; picture-in-picture"`; opened directly in
  * a browser it shows a 403 page (no Referer), which is the domain check working.
  */
@@ -32,6 +35,15 @@ export function embedUrl(videoId: string, accountId: number | string, viewerToke
   if (viewerToken === undefined || viewerToken === null || viewerToken === '') return base;
   if (typeof viewerToken !== 'string') {
     throw new TypeError('embedUrl: viewerToken must be a string.');
+  }
+  if (decodePayload(viewerToken) !== undefined) {
+    const named = viewerTokenVideo(viewerToken);
+    if (named === null) {
+      throw new RangeError(`embedUrl: this viewer token names no video, and Wolvy refuses such tokens. Sign it for ${videoId}.`);
+    }
+    if (named !== videoId) {
+      throw new RangeError(`embedUrl: this viewer token is for video ${named}, not ${videoId}. Sign one token per video.`);
+    }
   }
   return `${base}?vt=${encodeURIComponent(viewerToken)}`;
 }

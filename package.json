@@ -1,6 +1,6 @@
 {
   "name": "@wolvy/node",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Official Node.js SDK for the Wolvy Developer API: a typed client, viewer-token signing, webhook verification and embed URLs.",
   "license": "Apache-2.0",
   "author": "Wolvy (https://wolvy.net)",

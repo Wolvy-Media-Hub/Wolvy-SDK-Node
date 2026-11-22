@@ -8,23 +8,23 @@ export const VIEWER_TOKEN_MAX_TTL = 86400;
 export const VIEWER_ID_MAX_BYTES = 64;
 
 export interface SignViewerTokenOptions {
+  /**
+   * The Wolvy video id the token plays (its `video` claim). Required: Wolvy refuses a token
+   * that names no video, so a token copied out of one page cannot open your other videos.
+   */
+  video: string;
   /** The signing time, as Unix seconds or a Date. Default: now. `exp` is `now + ttlSeconds`. */
   now?: number | Date;
-  /**
-   * A Wolvy video id: the token then plays only that video (a `video` claim, as the API's
-   * `bind_video` makes). Default: any video of the account.
-   */
-  video?: string;
 }
 
 /**
- * Sign a viewer token (`vt`) locally, with no API call:
+ * Sign a viewer token (`vt`) for one video locally, with no API call:
  *
- *     payload = base64url(JSON {"vid": viewerId, "exp": now + ttlSeconds})
+ *     payload = base64url(JSON {"vid": viewerId, "exp": now + ttlSeconds, "video": videoId})
  *     vt      = payload + "." + base64url(HMAC-SHA256(secret, payload))
  *
  * The result is byte-identical to the `vt` of `POST /v1/videos/{id}/playback-tokens`
- * for the same viewer id, lifetime and second, because the same rules apply: the id is
+ * for the same viewer id, video, lifetime and second, because the same rules apply: the id is
  * trimmed of spaces, tabs, line breaks, NUL and vertical tab at both ends and must then be
  * 1–64 UTF-8 bytes; the lifetime is a whole number from 60 to 86400 seconds; the JSON is
  * written as PHP's json_encode writes it (`/` as `\/`, non-ASCII as `\uXXXX`).
@@ -32,13 +32,14 @@ export interface SignViewerTokenOptions {
  * `secret` is the account's signing secret (dashboard: Settings → Watermark → Signing
  * secret), used as the text shown there — never hex-decoded. Keep it on your server.
  *
- * Throws TypeError or RangeError for input the API would refuse.
+ * Throws TypeError or RangeError for input the API would refuse, and TypeError when
+ * `options.video` is missing.
  */
 export function signViewerToken(
   viewerId: string,
   ttlSeconds: number,
   secret: string,
-  options: SignViewerTokenOptions = {},
+  options: SignViewerTokenOptions,
 ): string {
   if (typeof viewerId !== 'string') {
     throw new TypeError('signViewerToken: viewerId must be a string.');
@@ -67,16 +68,51 @@ export function signViewerToken(
     throw new TypeError('signViewerToken: secret must be a non-empty string (the account signing secret).');
   }
 
-  const video = options.video;
-  if (video !== undefined && (typeof video !== 'string' || !/^[A-Za-z0-9_-]{1,64}$/.test(video))) {
+  const video = (options as Partial<SignViewerTokenOptions> | undefined)?.video;
+  if (video === undefined || video === null) {
+    throw new TypeError(
+      'signViewerToken: options.video is required. Wolvy refuses a token that names no video; sign one token per video.',
+    );
+  }
+  if (typeof video !== 'string' || !VIDEO_ID.test(video)) {
     throw new RangeError('signViewerToken: options.video must be a Wolvy video id (1-64 letters, digits, "-" or "_").');
   }
 
   const exp = unixSeconds(options.now) + ttlSeconds;
-  const json = `{"vid":${phpJsonString(vid)},"exp":${exp}${video !== undefined ? `,"video":${phpJsonString(video)}` : ''}}`;
+  const json = `{"vid":${phpJsonString(vid)},"exp":${exp},"video":${phpJsonString(video)}}`;
   const payload = Buffer.from(json, 'utf8').toString('base64url');
   const sig = createHmac('sha256', secret).update(payload).digest('base64url');
   return `${payload}.${sig}`;
+}
+
+/** A Wolvy video id, as the player accepts it. */
+const VIDEO_ID = /^[A-Za-z0-9_-]{1,64}$/;
+
+/**
+ * The video a viewer token names, read WITHOUT checking its signature; null when it names
+ * none or is not a token. For catching mix-ups early, never for access decisions.
+ */
+export function viewerTokenVideo(viewerToken: string): string | null {
+  const payload = decodePayload(viewerToken);
+  if (payload === undefined) return null;
+  const video = payload['video'];
+  return typeof video === 'string' && video !== '' ? video : null;
+}
+
+/** The token's payload, or undefined when it is not a token this SDK can read. */
+export function decodePayload(viewerToken: string): Record<string, unknown> | undefined {
+  if (typeof viewerToken !== 'string') return undefined;
+  const parts = viewerToken.split('.');
+  const payload = parts[0];
+  if (parts.length !== 2 || payload === undefined || payload === '') return undefined;
+  try {
+    const value: unknown = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    return value !== null && typeof value === 'object' && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function unixSeconds(now: number | Date | undefined): number {
