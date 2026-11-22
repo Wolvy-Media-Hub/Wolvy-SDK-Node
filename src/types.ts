@@ -325,13 +325,17 @@ export interface PlaybackTokenCreateParams {
   viewer_id: string;
   /** 60–86400 seconds. Default 21600 (6 hours). */
   ttl_seconds?: number;
+  /** true: the token plays only this video. Default false: every video of the account. */
+  bind_video?: boolean;
 }
 
 export interface PlaybackToken {
   object: 'playback_token';
   video_id: string;
   viewer_id: string;
-  /** The signed viewer token. Not bound to the video: it plays every video of the account until it expires. */
+  /** True when minted with `bind_video`: the token plays only this video. */
+  bound_to_video: boolean;
+  /** The signed viewer token. Unless `bound_to_video`, it plays every video of the account until it expires. */
   vt: string;
   expires_at: Timestamp;
   embed_url: string;

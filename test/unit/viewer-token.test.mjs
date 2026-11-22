@@ -92,3 +92,23 @@ describe('signViewerToken', () => {
     assert.throws(() => signViewerToken('v', 60, 's', { now: new Date('nope') }), TypeError);
   });
 });
+
+describe('signViewerToken with a video (bind_video)', () => {
+  // php: json_encode(['vid' => 'user-8813', 'exp' => 1790000000, 'video' => 'a1b2c3d4e5f60718293a']), signed as the API does
+  const BOUND = 'eyJ2aWQiOiJ1c2VyLTg4MTMiLCJleHAiOjE3OTAwMDAwMDAsInZpZGVvIjoiYTFiMmMzZDRlNWY2MDcxODI5M2EifQ.KPYNjR-agijPtfv9s1VbBOSs_QJmi3NMlQ7tsUXCY9M';
+
+  it('adds the video claim after exp, byte-identical to the API', () => {
+    const vt = signViewerToken(DOCS.viewerId, 3600, DOCS.secret, { now: DOCS.exp - 3600, video: 'a1b2c3d4e5f60718293a' });
+    assert.equal(vt, BOUND);
+    assert.deepEqual(Object.keys(decode(vt)), ['vid', 'exp', 'video']);
+  });
+
+  it('leaves an unbound token as before', () => {
+    assert.equal(signViewerToken(DOCS.viewerId, 3600, DOCS.secret, { now: DOCS.exp - 3600 }), DOCS.vt);
+  });
+
+  it('refuses something that is not a video id', () => {
+    assert.throws(() => signViewerToken('u', 3600, DOCS.secret, { video: 'not a video!' }), RangeError);
+    assert.throws(() => signViewerToken('u', 3600, DOCS.secret, { video: '' }), RangeError);
+  });
+});
